@@ -2,18 +2,14 @@ CC = gcc
 CFLAGS = -g -O3 -Wall -Wextra
 TARGET = ordereye-dnsmap
 SRCS = ordereye-dnsmap.c cli.c dns_protocol.c dns_resolver.c memory.c net_defs.c network.c dns_mapping.c
-OBJS = $(SRCS:.c=.o)
 
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(TARGET): $(SRCS)
+	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f $(TARGET)
 
 install:
 	install -m 755 $(TARGET) /usr/local/bin/
