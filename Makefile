@@ -22,4 +22,3 @@ uninstall:
 	rm -f /usr/local/bin/$(TARGET)
 
 .PHONY: all clean install uninstall
-EOF
