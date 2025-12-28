@@ -1,20 +1,15 @@
 CC = gcc
-CFLAGS = -g -O3 -Wall -Wextra
+CFLAGS = -g -O3 -Idns -Inet -Iutils
 TARGET = ordereye-dnsmap
-SRCS = ordereye-dnsmap.c cli.c dns_protocol.c dns_resolver.c memory.c net_defs.c network.c dns_mapping.c
-
-all: $(TARGET)
-
-$(TARGET): $(SRCS)
-	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)
-
-clean:
-	rm -f $(TARGET)
+SRCS = ordereye-dnsmap.c \
+       dns/dns_mapping.c dns/dns_resolver.c dns/dns_protocol.c \
+       net/net_defs.c net/network.c \
+       utils/cli.c utils/memory.c
 
 install:
-	install -m 755 $(TARGET) /usr/local/bin/
+	$(CC) $(CFLAGS) $(SRCS) -o /usr/bin/$(TARGET)
 
 uninstall:
-	rm -f /usr/local/bin/$(TARGET)
+	rm -f /usr/bin/$(TARGET)
 
-.PHONY: all clean install uninstall
+.PHONY: install uninstall
