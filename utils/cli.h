@@ -10,7 +10,7 @@ typedef struct {
 	char arguments[100][101];
 }shell_t;
 
-void help (char *color);
+void help ();
 void print_logo ();
 void arg_check (int argc, char **argv, shell_t *shell, struct option *long_option);
 void alloccheck (void *pointer);

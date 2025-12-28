@@ -10,42 +10,30 @@
 #include "dns_protocol.h"
 #include "memory.h"
 
-// Colors
-
-#define RED "\033[38;2;255;40;40m"
-#define YELLOW "\033[0;33m"
-#define RESET "\033[0m"
-
-void help (char *color)
+void help ()
 {
-	printf("%sUsage: ./ordereye-parser [options] [file] [pattern] [count] [position] [substring] [count]\n\n", color);
-
-	printf("Options:\n");
-	printf("  -l       Normal mode (like grep). Prints the entire line if it contains the specified pattern.\n");
-	printf("  -p       Extraction mode. Extracts everything after the position until the pattern is found or after a certain number of occurrences.\n");
-	printf("  -s       Substring extraction mode. Extracts everything after the specified substring until it finds the specified pattern a given number of times.\n");
-	printf("  -v       Invert the result for `-l` mode, showing lines that do NOT contain the specified pattern.\n");
-	printf("  -e       Enable enumeration. For `-l`, `-s`, and `-p` modes, this will display the line number alongside the results.\n\n");
-
-	printf("Parameters:\n");
-	printf("  file     The file you want to process.\n");
-	printf("  pattern  The pattern or substring you want to search for.\n");
-	printf("  count    The number of occurrences of the pattern or substring to consider for `-p` and `-s` modes.\n");
-	printf("  position The starting position in the string for `-p` mode (applicable only for `-p` mode).\n");
-	printf("  substring The substring used as the delimiter for extraction (applicable to `-p` and `-s` modes).\n\n");
-
+	line("✦ ✧ ", 25, LILAC);
+	printf("%sUsage: %sordereye-dnsmap <wordlist> <domain> [ options ]\n\n", SKYBLUE, YELLOW);
+    
+	printf("%sOptions:\n", SKYBLUE);
+	printf("%s  -h, --help%s           Show this help message and exit\n\n", YELLOW, SKYBLUE);
+    
+	printf("%sParameters:\n", SKYBLUE);
+	printf("%s  wordlist             %sPath to the wordlist file for subdomain enumeration\n", YELLOW, SKYBLUE);
+	printf("%s  domain               %sTarget domain name\n\n", YELLOW, SKYBLUE);
+    
 	printf("Examples:\n");
-	printf("1. Using `-l` mode with enumeration:\n");
-	printf("   ./ordereye-parser -le test.txt 'substring'\n\n");
+	printf("  1. Subdomain enumeration with wordlist:\n");
+	printf("%s     ordereye-dnsmap wordlist/list.txt youtube.com\n\n", YELLOW);
+    
+	printf("%s  2. Using a custom wordlist:\n", SKYBLUE);
+	printf("%s     ordereye-dnsmap /path/to/subdomains.txt example.com\n\n", YELLOW);
+    
+	printf("%s  3. Show this help message:\n", SKYBLUE);
+	printf("%s     ordereye-dnsmap -h\n", YELLOW);
+	printf("     ordereye-dnsmap --help%s\n\n", RESET);
+	line("✦ ✧ ", 25, LILAC);
 
-	printf("2. Using `-p` mode to extract after position 1 until the second occurrence of a space:\n");
-	printf("   ./ordereye-parser -pe test.txt 1 ' ' 2\n\n");
-
-	printf("3. Using `-s` mode to extract everything after 'substring' until the pattern '.' appears 2 times:\n");
-	printf("   ./ordereye-parser -se test.txt 'substring' 1 '.' 2\n\n");
-
-	printf("4. Using `-v` with `-l` to exclude lines containing 'substring':\n");
-	printf("   ./ordereye-parser -l -v test.txt 'substring'%s\n", RESET);
 	exit(EXIT_SUCCESS);
 }
 
@@ -96,7 +84,7 @@ void arg_check (int argc, char **argv, shell_t *shell, struct option *long_optio
 		switch (opt)
 		{
 			case 'h':
-				help(SKYBLUE);
+				help();
 				break;
 		}
 

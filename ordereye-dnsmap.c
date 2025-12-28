@@ -21,9 +21,8 @@ int main (int argc, char **argv)
 {
 	print_logo();
 
-	printf("%s", RESET);
-
-	if (argc < 3) error("\nInsufficient arguments provided");
+	shell_t shell;
+	memset(&shell, 0, sizeof(shell_t));
 
 	struct option long_options[] =
 	{
@@ -31,16 +30,19 @@ int main (int argc, char **argv)
 		{0, 0, 0, 0}
 	};
 
-	pool_t pool = pool_create(POOL_SIZE);
-
-	shell_t shell;
-	memset(&shell, 0, sizeof(shell_t));
 	arg_check(argc, argv, &shell, long_options);
 
+	if (argc < 3) error("\nInsufficient arguments provided");
+
+
+	pool_t pool = pool_create(POOL_SIZE);
+
+	// PREISO DE COLOCAR ARG_CHECK ANTES DA CHECAGEM DE ARGUMENTOS, PARA QUE EU CONSIGA COLOCAR --HELP OU -H EM QUALQUER LUGAR
+	
 	options_t options;
 	memset(&options, 0, sizeof(options_t));
 	options.axfr = false;
-	// CRIAR A ESTRUTURA DA QUERY AQUI EM ORDEREYE-DNSMAP.C E JOGAR O RESULTADO DA CONSULTA PTR DENTRO DE QUERY
+
 	sock_t sock;
 	memset(&sock, 0, sizeof(sock_t));
 	validate_address(&sock, shell.arguments[0], &options, &pool);
@@ -50,11 +52,10 @@ int main (int argc, char **argv)
 
 		dns_buffer_t dns_buff = {0};
 
-		// CRIAR UMA FUNÇÃO DNS_QUERIES OU ALGO ASSIM
 		dns_query_t *query = NULL;
 
 		//axfr_query(&sock, &dnsbuff, &query, &options, &pool);
-		// NESTA PARTE EU AINDA IREI ENCAPSULAR ELA EM UMA FUNÇÃO PARA BRUTE FORCE
+
 		dns_send_queries(&sock, &dns_buff, domain_qtypes, &query, &options, &pool);
 
 		brute_force(&sock, &dns_buff, &query, shell.file, &options, &pool);
@@ -62,6 +63,3 @@ int main (int argc, char **argv)
 		close(sock.sockfd);
 	}
 }
-
-// ADICIONAR TRATAMENTO DE ERROS AO INSERIR UM DOMÍNIO OU ENDEREÇO IP INVÁLIDO
-// PERMITIR QUE SEJA INSERIDO COMO ARGUMENTO ENDEREÇOS IP AO INVÉS DE DOMÍNIOS
