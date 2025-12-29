@@ -127,7 +127,7 @@ int hierarquic_print(dns_query_t *query, int layer)
 		if(cursor->next) printf(" ├─");
 		else printf(" └─");
 
-		printf(" %s%s ⟪%s %s | %s | %u %s⟫%s\n", PURPLE, cursor->answer.answer, YELLOW, get_strqtype(cursor->answer.qtype), get_strqclass(cursor->answer.qclass), cursor->answer.ttl, PURPLE, RESET);
+		printf(" %s%s ⟪%s %s | %s | %u %s⟫%s\n", SKYBLUE, cursor->answer.answer, YELLOW, get_strqtype(cursor->answer.qtype), get_strqclass(cursor->answer.qclass), cursor->answer.ttl, SKYBLUE, RESET);
 		hierarquic_print(cursor->child, layer + 1);
 	}
 
@@ -148,16 +148,16 @@ void results_print(char *domain, dns_query_t *query, bool hierarquic)
 	{
 		if(query->qtype == DNS_SOA)
 		{
-			printf(" %s├─ MNAME: %s%s (Primary Nameserver)%s\n", YELLOW, PURPLE, query->answer.soa.mname, RESET);
-			printf(" %s├─ RNAME: %s%s (Responsible Person)%s\n", YELLOW, PURPLE, query->answer.soa.rname, RESET);
-			printf(" %s├─ SERIAL: %s%u (Zone Version)%s\n", YELLOW, PURPLE, query->answer.soa.serial, RESET);
-			printf(" %s├─ REFRESH: %s%u (Secondary NS refresh interval)%s\n", YELLOW, PURPLE, query->answer.soa.refresh, RESET);
-			printf(" %s├─ RETRY: %s%u (Retry interval on failure)%s\n", YELLOW, PURPLE, query->answer.soa.retry, RESET);
-			printf(" %s├─ EXPIRE: %s%u (Zone expiration time)%s\n", YELLOW, PURPLE, query->answer.soa.expire, RESET);
-			printf(" %s└─ MINIMUM: %s%u (Negative caching TTL)%s\n", YELLOW, PURPLE, query->answer.soa.minimum, RESET);
+			printf(" %s├─ MNAME: %s%s (Primary Nameserver)%s\n", YELLOW, SKYBLUE, query->answer.soa.mname, RESET);
+			printf(" %s├─ RNAME: %s%s (Responsible Person)%s\n", YELLOW, SKYBLUE, query->answer.soa.rname, RESET);
+			printf(" %s├─ SERIAL: %s%u (Zone Version)%s\n", YELLOW, SKYBLUE, query->answer.soa.serial, RESET);
+			printf(" %s├─ REFRESH: %s%u (Secondary NS refresh interval)%s\n", YELLOW, SKYBLUE, query->answer.soa.refresh, RESET);
+			printf(" %s├─ RETRY: %s%u (Retry interval on failure)%s\n", YELLOW, SKYBLUE, query->answer.soa.retry, RESET);
+			printf(" %s├─ EXPIRE: %s%u (Zone expiration time)%s\n", YELLOW, SKYBLUE, query->answer.soa.expire, RESET);
+			printf(" %s└─ MINIMUM: %s%u (Negative caching TTL)%s\n", YELLOW, SKYBLUE, query->answer.soa.minimum, RESET);
 		} else
 		{
-			for(dns_query_t *cursor = query; cursor; cursor = cursor->next) printf(" %s├─ %s %s ⟪ %s | %s | %u ⟫ %s\n", YELLOW, PURPLE, cursor->answer.answer, get_strqtype(cursor->answer.qtype), get_strqclass(cursor->answer.qclass), cursor->answer.ttl, RESET);
+			for(dns_query_t *cursor = query; cursor; cursor = cursor->next) printf(" %s├─ %s %s ⟪ %s | %s | %u ⟫ %s\n", YELLOW, SKYBLUE, cursor->answer.answer, get_strqtype(cursor->answer.qtype), get_strqclass(cursor->answer.qclass), cursor->answer.ttl, RESET);
 		}
 	}
 
