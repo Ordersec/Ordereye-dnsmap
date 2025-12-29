@@ -137,7 +137,7 @@ int hierarquic_print(dns_query_t *query, int layer)
 void results_print(char *domain, dns_query_t *query, bool hierarquic)
 {
 	title("✦ ✧ ", 25, query->qtype, domain);
-	printf("%s✦ %s%s%s\n",YELLOW, PURPLE, domain, RESET);
+	printf("%s✦ %s%s\n", LILAC, domain, RESET);
 	if(hierarquic)
 	{
 		int layer = 1; 
@@ -157,7 +157,7 @@ void results_print(char *domain, dns_query_t *query, bool hierarquic)
 			printf(" %s└─ MINIMUM: %s%u (Negative caching TTL)%s\n", YELLOW, SKYBLUE, query->answer.soa.minimum, RESET);
 		} else
 		{
-			for(dns_query_t *cursor = query; cursor; cursor = cursor->next) printf(" %s├─ %s %s ⟪ %s | %s | %u ⟫ %s\n", YELLOW, SKYBLUE, cursor->answer.answer, get_strqtype(cursor->answer.qtype), get_strqclass(cursor->answer.qclass), cursor->answer.ttl, RESET);
+			for(dns_query_t *cursor = query; cursor; cursor = cursor->next) printf(" %s├─ %s %s ⟪%s %s | %s | %u ⟫ %s\n", YELLOW, SKYBLUE, cursor->answer.answer, YELLOW, get_strqtype(cursor->answer.qtype), get_strqclass(cursor->answer.qclass), cursor->answer.ttl, RESET);
 		}
 	}
 
