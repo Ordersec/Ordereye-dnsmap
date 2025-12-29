@@ -127,7 +127,7 @@ int hierarquic_print(dns_query_t *query, int layer)
 		if(cursor->next) printf(" ├─");
 		else printf(" └─");
 
-		printf(" %s%s ⟪ %s | %s | %u ⟫%s\n", PURPLE, cursor->answer.answer, get_strqtype(cursor->answer.qtype), get_strqclass(cursor->answer.qclass), cursor->answer.ttl, RESET);
+		printf(" %s%s ⟪%s %s | %s | %u %s⟫%s\n", PURPLE, cursor->answer.answer, YELLOW, get_strqtype(cursor->answer.qtype), get_strqclass(cursor->answer.qclass), cursor->answer.ttl, PURPLE, RESET);
 		hierarquic_print(cursor->child, layer + 1);
 	}
 
